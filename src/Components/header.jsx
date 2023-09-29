@@ -23,6 +23,13 @@ function Header({ onSearch }) {
         <figure>
           <img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png" alt="logoPokemon" />
         </figure>
+        <nav>
+          <ul>
+            <li>Pokedex</li>
+            <li>PokedexSword&shild</li>
+            <li>PokedexClassica</li>
+          </ul>
+        </nav>
         <input
           type="text"
           placeholder={placeholder}

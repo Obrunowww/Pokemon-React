@@ -17,6 +17,23 @@ header section{
   justify-content: space-between;
   transition: all ease 3s;
 }
+/* NAV DA HEADER */
+header nav{
+  width: 40vw;
+}
+header ul{
+  display: flex;
+  justify-content: space-between;
+  
+}
+u:ntc{
+  color: red;
+}
+header li:hover{
+  color: red;
+
+}
+
 /* Adicionando uma animação para o input */
 header section input {
   padding: 2px;

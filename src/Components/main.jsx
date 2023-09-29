@@ -188,9 +188,9 @@ function Card({ nome, imagem,shiny,virado, shinyVirado, tipos , pegarCor, pegarF
         <section className="cardPoke" 
         style = {{
             backgroundImage: `url(${fundoAtual})`,
-            backgroundSize: tamanhoDoFundo}}>
+            backgroundSize: tamanhoDoFundo, borderColor : `${pegarCor(tipoPrincipal, true)}`}}>
             <figure>
-                <img src={imagemAtual} alt={"Imagem do " + nome} />
+                <img src={imagemAtual} alt={`Imagem do ${nome}`} />
                 <figcaption style={{color: `${pegarCor(tipoPrincipal, true)}`, background: `${pegarCor(tipoPrincipal)}`}}>{nome}</figcaption>
             </figure>
             <section className='tipos'>
