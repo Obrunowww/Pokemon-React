@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 
 
-function Main({ nomePesquisado }) {
+
+function Main({ nomePesquisado, pokemons, loading }) {
     const [quantidadeDesejada, setQuantidadeDesejada] = useState(50);
-    const [pokemons, setPokemons] = useState([]);
-    const [loading, setLoading] = useState(true);
+    
+   
 
 
     const pegarCor = (tipo, escuro = false) => {
@@ -37,58 +37,29 @@ function Main({ nomePesquisado }) {
     
       const pegarFundo = (tipo,) => {
         const fundo = {
-          grass: "/images/grama.jpg",
-          fire: "/images/fogo.jpg",
-          water: "/images/agua.jpg",
-          bug: "/images/inseto.jpg",
-          normal: "/images/normal.jpg",
-          poison: "/images/veneno.jpg",
-          electric: "/images/eletrico.jpg",
-          ground: "/images/terra.jpg",
-          fairy: "/images/fada.jpg",
-          flying: "/images/voador.jpg",
-          fighting: "/images/lutador.jpg",
-          rock: "/images/pedra.jpg",
-          ice: "/images/gelo.jpg",
-          psychic:"/images/psiquico.jpg",
-          dragon: "/images/dragão.jpg",
-          ghost: "/images/fantasma.jpg",
-          steel: "/images/ferro.jpg",
-          dark: "/images/dark.jpg",
-          default: "/images/normal.jpg"
+          grass: "./images/grama.jpg",
+          fire: "./images/fogo.jpg",
+          water: "./images/agua.jpg",
+          bug: "./images/inseto.jpg",
+          normal: "./images/normal.jpg",
+          poison: "./images/veneno.jpg",
+          electric: "./images/eletrico.jpg",
+          ground: "./images/terra.jpg",
+          fairy: "./images/fada.jpg",
+          flying: "./images/voador.jpg",
+          fighting: "./images/lutador.jpg",
+          rock: "./images/pedra.jpg",
+          ice: "./images/gelo.jpg",
+          psychic:"./images/psiquico.jpg",
+          dragon: "./images/dragão.jpg",
+          ghost: "./images/fantasma.jpg",
+          steel: "./images/ferro.jpg",
+          dark: "./images/dark.jpg",
+          default: "./images/normal.jpg"
         };
         
         return fundo[tipo.toLowerCase()] || cores.default;
       };
-
-
-useEffect(() => {
-    pegarTodosPokemons();
-}, []);
-
-
-const pegarTodosPokemons = async () => {
-    try {
-        const resposta = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0");
-        const todosPokemons = resposta.data.results;
-
-        const detalhesPokemons = await Promise.all(todosPokemons.map(async (pokemon) => {
-            const detalhesResposta = await axios.get(pokemon.url);
-            const pokedata = detalhesResposta.data;
-            return pokedata;
-        }));
-
-        //   if (detalhesPokemons.length <= quantidadeDesejada) {
-        //     setMostrarBotaoCarregar(false);
-        //   }
-
-        setPokemons(detalhesPokemons);
-    } catch (erro) {
-        console.error("Erro em buscar todos Pokemons", erro);
-    } finally {
-        setLoading(false);
-    }
-};
 
 const carregarMaisPokemons = () => {
     setQuantidadeDesejada(quantidadeDesejada + 50);

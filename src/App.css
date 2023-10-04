@@ -26,11 +26,20 @@ header ul{
   justify-content: space-between;
   
 }
-u:ntc{
-  color: red;
+header li{
+  cursor: pointer;
+  transition: all ease 1s;
 }
+
 header li:hover{
   color: red;
+
+}
+.caixaDeInput{
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 
 }
 
@@ -42,6 +51,7 @@ header section input {
 }
 header section input:focus{
   transition: all ease 2s;
+  box-shadow: 0 0 5px rgba(250, 1, 1, 0.726);
   width: 130px;
 }
 /* Mudando a info do Placeholder do Input */

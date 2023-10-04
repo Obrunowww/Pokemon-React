@@ -1,7 +1,29 @@
 import React, { useState } from 'react';
 
-function Header({ onSearch }) {
+function Header({ onSearch, setPokedex, pokedex }) {
   const [placeholder, setPlaceholder] = useState("Pesquisar");
+ 
+
+  const mudarMain = (umaPokedex) =>{
+    console.log(`Foi clicado a ${umaPokedex}`)
+    if(umaPokedex ===pokedex){
+      console.log('Sem mudanças')
+    }else if(umaPokedex !=pokedex && umaPokedex === "Pokedex"){
+      console.log('Mudou para pokedex')
+      setPokedex("Pokedex")
+      // codigo aqui...
+    }else if(umaPokedex !=pokedex && umaPokedex === "PokedexSword&Shild"){
+      console.log('Mudou para PokedexSword&Shild')
+      setPokedex("PokedexSword&Shild")
+      // codigo aqui...
+    }else if(umaPokedex !=pokedex && umaPokedex === "PokedexClassica"){
+      console.log('Mudou para PokedexClassica')
+      setPokedex("PokedexClassica")
+      // codigo aqui...
+    }
+
+    
+  }
 
   const clicado = () => {
     setPlaceholder("Pesquisar Pokémon");
@@ -25,11 +47,13 @@ function Header({ onSearch }) {
         </figure>
         <nav>
           <ul>
-            <li>Pokedex</li>
-            <li>PokedexSword&shild</li>
-            <li>PokedexClassica</li>
+            <li onClick={() =>mudarMain("Pokedex")} style={{color: `${pokedex === "Pokedex"? "red": ""}`}} >Pokedex</li>
+            <li onClick={() =>mudarMain("PokedexSword&Shild")} style={{color: `${pokedex === "PokedexSword&Shild"? "red": ""}`}}>PokedexSword&Shild</li>
+            <li onClick={() =>mudarMain("PokedexClassica")} style={{color: `${pokedex === "PokedexClassica"? "red": ""}`}}>PokedexClassica</li>
           </ul>
         </nav>
+        <div className='caixaDeInput'>
+
         <input
           type="text"
           placeholder={placeholder}
@@ -37,6 +61,8 @@ function Header({ onSearch }) {
           onFocus={clicado}
           onBlur={nãoClicado}
         />
+
+        </div>
       </section>
     </header>
   );
