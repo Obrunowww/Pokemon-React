@@ -67,6 +67,7 @@ header section input:focus::placeholder {
 
 main{
   height: 88vh;
+  transition: all ease 2s;
   display: flex;
   flex-direction: column;
   align-items: center;

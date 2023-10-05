@@ -9,15 +9,15 @@ function Header({ onSearch, setPokedex, pokedex }) {
     if(umaPokedex ===pokedex){
       console.log('Sem mudanças')
     }else if(umaPokedex !=pokedex && umaPokedex === "Pokedex"){
-      console.log('Mudou para pokedex')
+      
       setPokedex("Pokedex")
       // codigo aqui...
     }else if(umaPokedex !=pokedex && umaPokedex === "PokedexSword&Shild"){
-      console.log('Mudou para PokedexSword&Shild')
+     
       setPokedex("PokedexSword&Shild")
       // codigo aqui...
     }else if(umaPokedex !=pokedex && umaPokedex === "PokedexClassica"){
-      console.log('Mudou para PokedexClassica')
+      
       setPokedex("PokedexClassica")
       // codigo aqui...
     }

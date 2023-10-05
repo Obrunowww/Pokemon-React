@@ -60,7 +60,7 @@ useEffect(()=>{
       break;
   }
   
-})
+}, [pokedex])
 
 
   const pesquisarNome = (nome) => {

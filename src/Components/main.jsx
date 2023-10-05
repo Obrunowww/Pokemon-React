@@ -35,7 +35,7 @@ function Main({ nomePesquisado, pokemons, loading }) {
         return cores[tipo.toLowerCase()] || cores.default;
       };
     
-      const pegarFundo = (tipo,) => {
+      const pegarFundo = (tipo) => {
         const fundo = {
           grass: "./images/grama.jpg",
           fire: "./images/fogo.jpg",
