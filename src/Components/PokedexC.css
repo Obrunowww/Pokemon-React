@@ -22,12 +22,15 @@
     width: 46%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     align-self: flex-end;
     height: 73%;
     margin-bottom: 1%;
     border: solid 3px rgb(57, 7, 236);
 
 }
+/* LadoEsquerdo Pokedex */
 /* Local do botão q mudar a cor */
 .botãoDeCima{
 height: 18%;
@@ -57,23 +60,157 @@ width: 90%;
     height: 30%;
 }
 .esquerdaDaImagem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: solid 1px black;
-    width: 30%;
-    background-color: red;
-    height: 65%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    width: 29%;
+    background-color: rgba(172, 6, 6, 0.767);
+    height: 66%;
     margin-bottom: 2px;
 }
-.LocalDaImagemPokemon{
-    border: solid 1px rgb(97, 5, 5);
+.esquerdaDaImagem h2{
+    color: rgba(0, 0, 0, 0.295);
+}
+.esquerdaDaImagem h2, .esquerdaDaImagem p{
+    font-size: 14px;
+    text-align: center;
+    text-shadow: 1px 1px 10px rgb(0, 0, 0);
+}
+.esquerdaDaImagem p{
+    width: 100%;
+    border-bottom: solid 1px black;
+    max-height: 43px;
+    overflow: hidden auto;
+    
+}
+.esquerdaDaImagem p::-webkit-scrollbar {
+    width: 12px;
+  }
+.PokeAtualtipos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 40px;
+    width: 100%;
+}
+.PokeAtualtipos button{
     width: 50%;
-    background-image: url("https://i.pinimg.com/originals/d5/c7/b8/d5c7b890f8468454a7c9ad6244623e1f.png");
+    border: solid 1px;
+    color: black;
+    background-color: transparent;
+    
+}
+
+.LocalDaImagemPokemon{
+    border-radius: 6px;
+    width: 50%;
+    transition: all ease 2s;
     background-size: 100% 100%;
-    height: 85%;
-    margin-top: 5%;
+    height: 86%;
+    margin-top: 6%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .LocalDaImagemPokemon img{
-    width: 98%;
+    width: 90%;
+    height: 80%;
+    object-fit: contain;
 }
+
+.botõesDeBaixo{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    
+}
+
+.avançarPokes{
+    width: 35%;
+    height: 45%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 4%;
+}
+.avançarPokes button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    height: 40%;
+    width: 40%;
+
+}
+.botõesDeBaixo button:hover{
+    background-color: rgba(0, 0, 0, 0.048);
+}
+.interagirComPokes{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.interaçãoBotãoCima{
+    height: 28%;
+    margin-bottom: 4%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.interaçãoBotãoCima button{
+    border:none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.interaçãoBotãoBaixo{
+    height: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-right: 10%;
+    margin-bottom: 2%;
+}
+.interaçãoBotãoBaixo button{
+    width: 62%;
+    height: 75%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.interaçãoBotãoCima button:first-child {
+    
+    width: 20%;
+    height: 100%;
+    border-radius: 100%;
+    margin-left: 10%;
+    margin-right: 3%;
+   
+  }
+  
+  /* Estilizar os outros dois botões */
+  .interaçãoBotãoCima button:not(:first-child) {
+   
+    width: 30%;
+    height: 40%;
+    
+  }
+
+  /* LadoDireitoPokedex */
+
+  .informaçõesAvPokemon{
+    padding-left: 1%;
+    background-color: rgba(0, 0, 0, 0.788);
+    width: 88%;
+    height: 62%;
+    overflow: hidden auto;
+  }
+  .informaçõesAvPokeBotões{
+    width: 80%;
+    height: 33%;
+    border: solid 1px;
+   
+  }

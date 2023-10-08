@@ -60,7 +60,7 @@ useEffect(()=>{
       break;
   }
   
-}, [pokedex])
+}, [pokedex,Pokemons, nomePesquisado])
 
 
   const pesquisarNome = (nome) => {

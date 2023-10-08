@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 
 
 
 
 function Main({ nomePesquisado, pokemons, loading }) {
     const [quantidadeDesejada, setQuantidadeDesejada] = useState(50);
-    
+    const [pokemonsFiltrados, setPokemonsFiltrados] = useState([]);
+
    
 
 
@@ -66,11 +67,16 @@ const carregarMaisPokemons = () => {
 };
 
 
-const pokemonsFiltrados = nomePesquisado
-    ? pokemons.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(nomePesquisado.toLowerCase())
-    )
-    : pokemons;
+useEffect(() => {
+    const filteredPokemons = nomePesquisado
+      ? pokemons.filter((pokemon) =>
+          pokemon.name.toLowerCase().includes(nomePesquisado.toLowerCase())
+        )
+      : pokemons;
+  
+    setPokemonsFiltrados(filteredPokemons);
+  }, [nomePesquisado, pokemons]);
+
 
 return (
     <main>
@@ -151,7 +157,6 @@ function Card({ nome, imagem,shiny,virado, shinyVirado, tipos , pegarCor, pegarF
     }
     const trocarFundo = (tipo) =>{
         setFundoAtual(pegarFundo(tipo))
-        setTamanhoDoFundo(tamanhoDoFundo)
         
     }
     
