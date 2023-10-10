@@ -1,9 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "./PokedexC.css"
-
+import axios from 'axios';
 function MainClassic({ nomePesquisado, pokemons, loading }) {
+
     const [pokemonEstaVirado, setPokemonEstaVirado] = useState(false)
+    const [ataquesDoPoke, setAtaquesDoPoke] = useState([])
+    const [mostrarLinhaDeEvolução, setMostrarLinhaDeEvolução] = useState([])
+    const [evoluções, setEvoluções] = useState(false)
+    const [carregandoAtaques, setCarregandoAtaques] = useState(true)
+    const [carregandoEvoluções, setCarregandoEvoluções] = useState(true)
     const [pokemonEhShiny, setpokemonEhShiny] = useState(false)
     const [mostrarStatus, setMostrarStatus] = useState(false)
     const [mostrarAtaques, setMostrarAtaques] = useState(false)
@@ -31,7 +37,9 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
         dark: "https://cdn.steamstatic.com/steamcommunity/public/images/items/573210/666974d94dc7e370f8cb279fd986ff477f00ccb7.jpg",
         default: "https://i.pinimg.com/originals/d5/c7/b8/d5c7b890f8468454a7c9ad6244623e1f.pn"
     })
+
     const [tipoPrincipal, setTipoPrincipal] = useState(pokemonAtual.types[0].type.name)
+    const [evoImagem, setEvoImagens] = useState([])
 
     const pegarFundo = (tipo) => {
         return habitat[tipo.toLowerCase()] || habitat.default;
@@ -94,17 +102,29 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
         setTipoPrincipal(pokemonAtual.types[0].type.name);
         setFundoAtual(pegarFundo(tipoPrincipal))
+
+
     }, [pokemonAtual, tipoPrincipal, pokemonEhShiny, pokemonEstaVirado]);
+
+    useEffect(() => {
+        pegarAtaques(pokemonAtual)
+        pegarLinhaEvolutiva(pokemonAtual)
+
+    }, [pokemonAtual])
+
 
 
     const MostrarPokemon = () => {
-        console.log(pokemonAtual)
+        pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.species.name)
     }
     const proximoPokemon = () => {
         setNumeroDoPokemon((s) => {
             let proximoNumero = s + 1;
-            setpokemonEhShiny(false)
             setPokemonEstaVirado(false)
+            setpokemonEhShiny(false)
+            setMostrarStatus(false)
+            setMostrarAtaques(false)
+            setEvoluções(false)
             if (proximoNumero > pokemons.length - 1) {
                 proximoNumero = 0
             }
@@ -119,8 +139,11 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
     }
     const pokemonAnterior = () => {
         setNumeroDoPokemon((s) => {
-            setpokemonEhShiny(false)
             setPokemonEstaVirado(false)
+            setpokemonEhShiny(false)
+            setMostrarStatus(false)
+            setMostrarAtaques(false)
+            setEvoluções(false)
             let proximoNumero = s - 1;
 
 
@@ -137,6 +160,70 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
     };
 
+    const pegarAtaques = async (pokemon) => {
+        try {
+            setCarregandoAtaques(true)
+            const detalhesDoAtaques = await Promise.all(pokemon.moves.map(async (movimento) => {
+                const detalhesResposta = await axios.get(movimento.move.url)
+
+                return detalhesResposta.data
+            }
+            ))
+            setAtaquesDoPoke(detalhesDoAtaques)
+        } catch (erro) {
+
+            console.log("erro ao pegar Ataques", erro)
+        } finally {
+            setTimeout(() => {
+                setCarregandoAtaques(false)
+            }, 400);
+        }
+    }
+
+    const pegarLinhaEvolutiva = async (pokemon) => {
+        let resposta;
+        let linhaEvolutiva;
+
+        try {
+
+            setCarregandoEvoluções(true)
+
+            const caminho = pokemon.species.url
+            resposta = (await axios.get(caminho)).data;
+            const caminhoParaEvoluções = resposta.evolution_chain.url
+            linhaEvolutiva = (await axios.get(caminhoParaEvoluções)).data
+        } catch (erro) {
+            console.log("deu um erro: ", erro)
+        } finally {
+            console.log(linhaEvolutiva)
+            setMostrarLinhaDeEvolução(linhaEvolutiva)
+            setCarregandoEvoluções(false)
+
+        }
+    }
+
+    const pegarImagemDasEvo = (evolução) => {
+
+        let imagen = ""
+
+
+
+        if (evolução) {
+            let primeiro = pokemons.filter((pokemon) =>
+                pokemon.name.toLowerCase().includes(evolução.toLowerCase()))
+
+            imagen = (primeiro[0].sprites.versions["generation-v"]["black-white"].animated.front_default
+                ? primeiro[0].sprites.versions["generation-v"]["black-white"].animated.front_default
+                : primeiro[0].sprites.front_default
+                    ? primeiro[0].sprites.front_default
+                    : "https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png")
+
+        }
+
+        return imagen
+
+    }
+
 
     return (
         <main className="mainPokedexC">
@@ -146,15 +233,16 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
                         <button className="mudançaDeCor" style={{
                             // pegar os tipos do pokemon tcg e baixar as imagens para esse
                             backgroundColor: `${pegarCor(pokemonAtual.types[0].type.name)}`
-                        }} onClick={() => MostrarPokemon()}></button>
+                        }} onClick={() => MostrarPokemon()
+                        }></button>
                     </div>
 
                     <div className="imagemPoke">
                         <div className="esquerdaDaImagem" style={{ color: `${pegarCor(pokemonAtual.types[0].type.name)}` }}>
                             <h2>Nome</h2>
-                            <p>{(pokemonAtual.name).toUpperCase()}</p>
+                            <p style={{ textShadow: `1px 1px 10px ${pegarCor(pokemonAtual.types[0].type.name)}` }}>{(pokemonAtual.name).toUpperCase()}</p>
                             <h2>Número</h2>
-                            <p>#{pokemonAtual.order > 0 ? pokemonAtual.order : "none"}</p>
+                            <p style={{ textShadow: `1px 1px 10px ${pegarCor(pokemonAtual.types[0].type.name)}` }} >#{pokemonAtual.order > 0 ? pokemonAtual.order : "none"}</p>
                             <h2>Tipos</h2>
                             <div className="PokeAtualtipos">
                                 {pokemonAtual.types.map((tipo, index) => (
@@ -185,15 +273,16 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
                         <div className="interagirComPokes">
                             <div className="interaçãoBotãoCima">
-                                <button onClick={() => setMostrarAtaques(!mostrarAtaques)}></button>
+                                <button onClick={() => { setMostrarStatus(false); setMostrarAtaques(!mostrarAtaques) }}></button>
                                 <button onClick={() => setPokemonEstaVirado(!pokemonEstaVirado)}></button>
                                 <button onClick={() => setpokemonEhShiny(!pokemonEhShiny)}></button>
                             </div>
                             <div className="interaçãoBotãoBaixo">
-                                <button onClick={() =>{
+                                <button onClick={() => {
                                     setMostrarStatus(false)
                                     setMostrarAtaques(false)
-                                } 
+                                    setEvoluções(false)
+                                }
                                 }></button>
                             </div>
 
@@ -205,32 +294,146 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
                     <div className="informaçõesAvPokemon">
                         {mostrarStatus ? (
-                            // Conteúdo a ser renderizado se mostrarStatus for verdadeiro
-                            <div>Conteúdo para mostrar Status verdadeiro</div>
-                        ) : mostrarAtaques ? (
-                            // Conteúdo a ser renderizado se mostrarAtaques for verdadeiro
-                            <div>Conteúdo para mostrar Ataques verdadeiro</div>
-                        ) : (
-                            // Conteúdo padrão se nenhum dos dois for verdadeiro
-                            <div className="status">
-                                <h2>Habilidades</h2>
-                                {pokemonAtual.abilities.map((habilidade, index) => (
-                                    <p key={index}>{habilidade.ability.name}</p>
-                                ))}
-                                <h2>Base de xp</h2>
-                                <p>
-                                    {pokemonAtual.base_experience}xp
-                                </p>
-                                <h2>Peso e Altura</h2>
-                                <p>
-                                    {(pokemonAtual.weight / 10).toFixed(2)}Kg
-                                </p>
-                                <p>{(pokemonAtual.height / 10).toFixed(2)}m</p>
 
-                            </div>
-                        )}
+                            <div className="status">
+                                <h2 style={{ textAlign: "center" }}>Status</h2>
+                                {pokemonAtual.stats.map((status, index) => (
+                                    <div className="status" key={index}>
+                                        <h3>{status.stat.name}</h3>
+                                        <p style={{ display: "flex", height: "24px", justifyContent: "space-around" }}> <span style={{ width: "10%" }}>{status.base_stat}</span>
+                                            <div className="barraContainer" style={{ width: "60%", height: "100%", border: "solid 1px" }}>
+                                                <div className="barra" style={{ width: `${status.base_stat}px`, height: "100%", backgroundColor: `${pegarCor(pokemonAtual.types[0].type.name)}` }}></div>
+                                            </div></p>
+                                    </div>
+                                ))}</div>
+                        ) : mostrarAtaques ? (
+                            carregandoAtaques ?
+                                (
+                                    <div style={{
+                                        width: "100%",
+                                        height: "100%", display: "flex",
+                                        alignItems: "center", justifyContent: "center"
+                                    }}> <img className="pokebolaLoading" style={{ width: "100px" }} src="https://i.pinimg.com/originals/09/a6/ae/09a6ae937a6d9ef5cd10d132b59d6f5d.png" alt="" /></div>
+                                )
+                                : (
+                                    <div>
+                                        <h2>Ataques ({ataquesDoPoke.length}) </h2>
+                                        <div className="ataquesGrid">
+                                            {ataquesDoPoke.map((ataque, index) => (
+                                                <div key={index} className="ataque" style={{ backgroundColor: `${pegarCor(ataque.type.name)}`, color: `${pegarCor(ataque.type.name, true)}` }}>
+                                                    <h3>
+                                                        {ataque.name}
+                                                    </h3>
+                                                    <div style={{
+                                                        width: "100%", height: "40%", display: "grid",
+                                                        gridTemplateColumns: "2fr 2fr 1fr"
+
+                                                    }}>
+                                                        <p> {ataque.power ? "power: " + ataque.power : "power: 0"}</p>
+                                                        <p>Tipo: {ataque.type.name}</p>
+                                                        <p style={{ textAlign: "end" }}>pp :{ataque.pp}</p>
+                                                    </div>
+
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )
+                        ) : evoluções ?
+                            (carregandoEvoluções ? (
+                                <div style={{
+                                    width: "100%",
+                                    height: "100%", display: "flex",
+                                    alignItems: "center", justifyContent: "center"
+                                }}> <img className="pokebolaLoading" style={{ width: "100px" }} src="https://i.pinimg.com/originals/09/a6/ae/09a6ae937a6d9ef5cd10d132b59d6f5d.png" alt="" /></div>
+                            ) : (
+
+                                <div>
+
+                                    <h1 style={{paddingTop: "5px", textAlign: "center"}}>Linha Evolutiva Do  {(pokemonAtual.name).toUpperCase()}</h1>
+
+
+                                    <div className="evolções">
+
+                                        {mostrarLinhaDeEvolução.chain.species.name && (
+
+                                        <figure>
+                                            <img src={`${pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.species.name)}`} alt="" />
+                                            <figcaption>{mostrarLinhaDeEvolução.chain.species.name}</figcaption>
+                                        </figure>
+                                        ) }
+
+                                        {mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name && (
+                                        <figure>
+
+                                            <img src={`${pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name)}`} alt="" />
+                                            <figcaption>{mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name}</figcaption>
+                                        </figure>
+
+                                        )}
+                                        {mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name &&(
+
+                                        <figure>
+                                            <img src={`${pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name)}`} alt="" />
+                                            <figcaption>{mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name}</figcaption>
+                                        </figure>
+                                        )
+
+                                        }
+                                    </div>
+                                    {/* fazer isso só pro eevee */}
+                                    {/* {mostrarLinhaDeEvolução.chain.evolves_to.length > 0 ? (
+                                        mostrarLinhaDeEvolução.chain.evolves_to.map((evo, index) => (
+                                            <p key={index}>{evo.species.name}</p>
+                                        ))
+                                    ) : (
+                                        <p>Não há evoluções disponíveis.</p>
+                                    )} */}
+                                </div>
+
+                            )
+
+
+                            ) : (
+
+                                <div className="InfoBasica">
+                                    <h2>Habilidades</h2>
+                                    {pokemonAtual.abilities.map((habilidade, index) => (
+                                        <p key={index}>{habilidade.ability.name}</p>
+                                    ))}
+                                    <h2>Base de xp</h2>
+                                    <p>
+                                        {pokemonAtual.base_experience == null ? "Sem base" : pokemonAtual.base_experience + "xp"}
+                                    </p>
+                                    <h2>Peso e Altura</h2>
+                                    <p>
+                                        {(pokemonAtual.weight / 10).toFixed(2)}Kg
+                                    </p>
+                                    <p>{(pokemonAtual.height / 10).toFixed(2)}m</p>
+
+                                </div>
+                            )}
                     </div>
-                    <div className="informaçõesAvPokeBotões"></div>
+                    <div className="informaçõesAvPokeBotões">
+
+                        <div className="ParteDeBaixoLadoDireito" >
+
+                        <button onClick={() => {
+                            setMostrarAtaques(false)
+                            setMostrarStatus(false)
+                            setEvoluções(!evoluções)
+
+                        }
+                        } ></button>
+                        <button style= {{
+                            border: "solid 3px black"
+                            ,borderRadius: "5px",
+                            backgroundColor: "#FB9B05", color: "#557FC6", fontSize: "20px"
+                        }}
+                        onClick={() => setMostrarStatus(!mostrarStatus)}>Status</button>
+
+                        </div>
+                    </div>
 
                 </section>
             </section>

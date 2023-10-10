@@ -23,7 +23,7 @@ function App() {
 
 const pegarTodosPokemons = async () => {
     try {
-        const resposta = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0");
+        const resposta = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1292&offset=0");
         const todosPokemons = resposta.data.results;
 
         const detalhesPokemons = await Promise.all(todosPokemons.map(async (pokemon) => {
