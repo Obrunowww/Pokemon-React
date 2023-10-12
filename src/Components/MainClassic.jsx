@@ -37,9 +37,10 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
         dark: "https://cdn.steamstatic.com/steamcommunity/public/images/items/573210/666974d94dc7e370f8cb279fd986ff477f00ccb7.jpg",
         default: "https://i.pinimg.com/originals/d5/c7/b8/d5c7b890f8468454a7c9ad6244623e1f.pn"
     })
+    const [linhaEvoDosPoke, setLinhaEvoDosPoke] = useState([])
 
     const [tipoPrincipal, setTipoPrincipal] = useState(pokemonAtual.types[0].type.name)
-    const [evoImagem, setEvoImagens] = useState([])
+
 
     const pegarFundo = (tipo) => {
         return habitat[tipo.toLowerCase()] || habitat.default;
@@ -109,22 +110,30 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
     useEffect(() => {
         pegarAtaques(pokemonAtual)
         pegarLinhaEvolutiva(pokemonAtual)
+        
 
     }, [pokemonAtual])
+
+    // useEffect(()=>{
+    //     atualizarEvoluções()
+    // },[mostrarLinhaDeEvolução])
 
 
 
     const MostrarPokemon = () => {
-        pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.species.name)
+        console.log("Essas são as imagens",linhaEvoDosPoke)
+    }
+    const reset = () => {
+        setPokemonEstaVirado(false)
+        setpokemonEhShiny(false)
+        setMostrarStatus(false)
+        setMostrarAtaques(false)
+        setEvoluções(false)
     }
     const proximoPokemon = () => {
         setNumeroDoPokemon((s) => {
             let proximoNumero = s + 1;
-            setPokemonEstaVirado(false)
-            setpokemonEhShiny(false)
-            setMostrarStatus(false)
-            setMostrarAtaques(false)
-            setEvoluções(false)
+            reset()
             if (proximoNumero > pokemons.length - 1) {
                 proximoNumero = 0
             }
@@ -139,11 +148,7 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
     }
     const pokemonAnterior = () => {
         setNumeroDoPokemon((s) => {
-            setPokemonEstaVirado(false)
-            setpokemonEhShiny(false)
-            setMostrarStatus(false)
-            setMostrarAtaques(false)
-            setEvoluções(false)
+            reset()
             let proximoNumero = s - 1;
 
 
@@ -192,36 +197,69 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
             resposta = (await axios.get(caminho)).data;
             const caminhoParaEvoluções = resposta.evolution_chain.url
             linhaEvolutiva = (await axios.get(caminhoParaEvoluções)).data
+            setMostrarLinhaDeEvolução(linhaEvolutiva)
         } catch (erro) {
             console.log("deu um erro: ", erro)
         } finally {
-            console.log(linhaEvolutiva)
-            setMostrarLinhaDeEvolução(linhaEvolutiva)
-            setCarregandoEvoluções(false)
 
+            setCarregandoEvoluções(false)
         }
     }
 
     const pegarImagemDasEvo = (evolução) => {
 
         let imagen = ""
-
+        let primeiro;
 
 
         if (evolução) {
-            let primeiro = pokemons.filter((pokemon) =>
+            primeiro = pokemons.filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(evolução.toLowerCase()))
 
-            imagen = (primeiro[0].sprites.versions["generation-v"]["black-white"].animated.front_default
-                ? primeiro[0].sprites.versions["generation-v"]["black-white"].animated.front_default
-                : primeiro[0].sprites.front_default
-                    ? primeiro[0].sprites.front_default
-                    : "https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png")
 
+            
         }
 
-        return imagen
+        console.log(primeiro)
 
+        return primeiro
+
+    }
+
+    const atualizarEvoluções = () =>{
+        let primeiroEvo, segundaEvo,terceiraEvo
+        let todosPoke = []
+        let todasAsimagens =[]
+        if(mostrarLinhaDeEvolução.chain.species.name){
+            
+            primeiroEvo = pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.species.name)
+            todosPoke.push(primeiroEvo)
+        }
+        if(mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name){
+            segundaEvo = pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name)
+            todosPoke.push(segundaEvo)
+        } if(mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name){
+
+            terceiraEvo = pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name)
+            todosPoke.push(terceiraEvo)
+        }
+        
+       
+        console.log("Como Elas estão situadas : ", todosPoke)
+        todosPoke.forEach((poke) =>{
+            poke.forEach((unidade) =>{
+                let imagem = (unidade.sprites.versions["generation-v"]["black-white"].animated.front_default
+                ? unidade.sprites.versions["generation-v"]["black-white"].animated.front_default
+                : unidade.sprites.front_default
+                    ? unidade.sprites.front_default
+                    : "https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png")
+                let name = unidade.name
+                todasAsimagens.push({name: name, imagem: imagem})
+            })
+        })
+        
+        setLinhaEvoDosPoke(todasAsimagens)
+        
     }
 
 
@@ -313,7 +351,8 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
                                         width: "100%",
                                         height: "100%", display: "flex",
                                         alignItems: "center", justifyContent: "center"
-                                    }}> <img className="pokebolaLoading" style={{ width: "100px" }} src="https://i.pinimg.com/originals/09/a6/ae/09a6ae937a6d9ef5cd10d132b59d6f5d.png" alt="" /></div>
+                                    }}> <img className="pokebolaLoading" style={{ width: "100px" }} src="https://i.pinimg.com/originals/09/a6/ae/09a6ae937a6d9ef5cd10d132b59d6f5d.png" alt="" />
+                                    </div>
                                 )
                                 : (
                                     <div>
@@ -350,37 +389,19 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
                                 <div>
 
-                                    <h1 style={{paddingTop: "5px", textAlign: "center"}}>Linha Evolutiva Do  {(pokemonAtual.name).toUpperCase()}</h1>
+                                    <h1 style={{ paddingTop: "5px", textAlign: "center" }}>Variantes E Evoluções  {(pokemonAtual.name).toUpperCase()}</h1>
 
 
-                                    <div className="evolções">
+                                    <figure className="evolções">
+                                        {linhaEvoDosPoke.map((linha) =>(
+                                            <div>
+                                                <img src={linha.imagem} alt="" />
+                                                <figcaption>{linha.name}</figcaption>
+                                            </div>
+                                        ))}        
 
-                                        {mostrarLinhaDeEvolução.chain.species.name && (
-
-                                        <figure>
-                                            <img src={`${pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.species.name)}`} alt="" />
-                                            <figcaption>{mostrarLinhaDeEvolução.chain.species.name}</figcaption>
-                                        </figure>
-                                        ) }
-
-                                        {mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name && (
-                                        <figure>
-
-                                            <img src={`${pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name)}`} alt="" />
-                                            <figcaption>{mostrarLinhaDeEvolução.chain.evolves_to[0]?.species.name}</figcaption>
-                                        </figure>
-
-                                        )}
-                                        {mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name &&(
-
-                                        <figure>
-                                            <img src={`${pegarImagemDasEvo(mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name)}`} alt="" />
-                                            <figcaption>{mostrarLinhaDeEvolução.chain.evolves_to[0]?.evolves_to[0]?.species.name}</figcaption>
-                                        </figure>
-                                        )
-
-                                        }
-                                    </div>
+                                       
+                                    </figure>
                                     {/* fazer isso só pro eevee */}
                                     {/* {mostrarLinhaDeEvolução.chain.evolves_to.length > 0 ? (
                                         mostrarLinhaDeEvolução.chain.evolves_to.map((evo, index) => (
@@ -418,19 +439,19 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
                         <div className="ParteDeBaixoLadoDireito" >
 
-                        <button onClick={() => {
-                            setMostrarAtaques(false)
-                            setMostrarStatus(false)
-                            setEvoluções(!evoluções)
+                            <button onClick={() => {
+                                setMostrarAtaques(false)
+                                setMostrarStatus(false)
+                                setEvoluções(!evoluções)
 
-                        }
-                        } ></button>
-                        <button style= {{
-                            border: "solid 3px black"
-                            ,borderRadius: "5px",
-                            backgroundColor: "#FB9B05", color: "#557FC6", fontSize: "20px"
-                        }}
-                        onClick={() => setMostrarStatus(!mostrarStatus)}>Status</button>
+                            }
+                            } ></button>
+                            <button style={{
+                                border: "solid 3px black"
+                                , borderRadius: "5px",
+                                backgroundColor: "#FB9B05", color: "#557FC6", fontSize: "20px"
+                            }}
+                                onClick={() => setMostrarStatus(!mostrarStatus)}>Status</button>
 
                         </div>
                     </div>

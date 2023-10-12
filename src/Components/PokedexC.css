@@ -231,16 +231,16 @@ width: 90%;
   .evolções{
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    height: 180px;
-  }
-  .evolções figure{
-    display: flex;
+    gap: 20px;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    height: 90%;
+    justify-content: space-around;
+    
+
   }
+  .evolções div:first-child{
+    padding-top: 20px;
+  }
+  
   .evolções figcaption{
     padding: 2px;
   }
