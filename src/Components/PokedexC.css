@@ -240,6 +240,10 @@ width: 90%;
   .evolções div:first-child{
     padding-top: 20px;
   }
+  .evolções div{
+    display: flex;
+    flex-direction: column;
+  }
   
   .evolções figcaption{
     padding: 2px;

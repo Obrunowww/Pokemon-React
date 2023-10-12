@@ -114,14 +114,9 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
     }, [pokemonAtual])
 
-    // useEffect(()=>{
-    //     atualizarEvoluções()
-    // },[mostrarLinhaDeEvolução])
-
-
 
     const MostrarPokemon = () => {
-        console.log("Essas são as imagens",linhaEvoDosPoke)
+         console.log(linhaEvoDosPoke)
     }
     const reset = () => {
         setPokemonEstaVirado(false)
@@ -198,20 +193,19 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
             const caminhoParaEvoluções = resposta.evolution_chain.url
             linhaEvolutiva = (await axios.get(caminhoParaEvoluções)).data
             setMostrarLinhaDeEvolução(linhaEvolutiva)
+        
         } catch (erro) {
             console.log("deu um erro: ", erro)
         } finally {
-
+           
             setCarregandoEvoluções(false)
+            
         }
     }
 
     const pegarImagemDasEvo = (evolução) => {
 
-        let imagen = ""
         let primeiro;
-
-
         if (evolução) {
             primeiro = pokemons.filter((pokemon) =>
                 pokemon.name.toLowerCase().includes(evolução.toLowerCase()))
@@ -225,6 +219,8 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
         return primeiro
 
     }
+ 
+   
 
     const atualizarEvoluções = () =>{
         let primeiroEvo, segundaEvo,terceiraEvo
@@ -261,6 +257,7 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
         setLinhaEvoDosPoke(todasAsimagens)
         
     }
+
 
 
     return (
@@ -440,6 +437,7 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
                         <div className="ParteDeBaixoLadoDireito" >
 
                             <button onClick={() => {
+                                 atualizarEvoluções()
                                 setMostrarAtaques(false)
                                 setMostrarStatus(false)
                                 setEvoluções(!evoluções)
