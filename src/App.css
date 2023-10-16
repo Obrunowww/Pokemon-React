@@ -88,7 +88,7 @@ main{
   width: 100%;
   display: flex;
   justify-content: center;
-  /* grid-column: 3; */
+  grid-column: 3;
 }
 .cardPoke{
   position: relative;
