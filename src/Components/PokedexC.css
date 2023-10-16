@@ -144,7 +144,7 @@ width: 90%;
     width: 40%;
 
 }
-.botõesDeBaixo button:hover, .ParteDeBaixoLadoDireito button:hover{
+.botõesDeBaixo button:hover, .ParteDeBaixoLadoDireito button:hover, .caixaDePesquisa button{
     background-color: rgba(0, 0, 0, 0.048);
 }
 .interagirComPokes{
@@ -228,7 +228,7 @@ width: 90%;
     padding: 2px;
   }
  
-  .evolções{
+  .evoluções{
     display: flex;
     align-items: center;
     gap: 20px;
@@ -237,10 +237,10 @@ width: 90%;
     
 
   }
-  .evolções div:first-child{
+  .evoluções div:first-child{
     padding-top: 20px;
   }
-  .evolções div{
+  .evoluções div{
     display: flex;
     flex-direction: column;
   }
@@ -261,4 +261,78 @@ width: 90%;
     cursor: pointer;
     width: 40%;
     height: 100%;
+  }
+
+  .caixaDePesquisa{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    height: 34%;
+    transition: all ease 2s;
+  }
+  .caixaDePesquisa button{
+    background-color: transparent;
+    border-radius: 100%;
+    width: 13%;
+    height: 80%;
+    margin-right: 10%;
+    border: none;
+    cursor: pointer;
+  }
+  .caixaDePesquisa input{
+    background-color: #0A3401;
+    width: 35%;
+    height: 50%;
+    transition: all ease 2s;
+    border: solid 1px;
+    padding-left: 2px;
+    animation: aumentar 2s;
+  }
+  .caixaDePesquisa .pesquisar{
+    position: absolute;
+    right: 15%;
+    width: 5%;
+    height: 40%;
+  }
+
+  @keyframes aumentar {
+    0%{
+      width: 9%;
+    }100%{
+      width: 35%;
+    }
+  }
+  .mostrarErro{
+    position: relative;
+    width: 250px;
+    height: 100px;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.384);
+    position: absolute;
+  }
+  .progreçoContainer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 10%;
+    
+  }
+  .progreço{
+    width: 100%;
+    height: 100%;
+    background-color: green;
+    animation: temporizador 3s ease;
+  }
+  @keyframes temporizador{
+    0%{
+      width: 100%;
+    }100%{
+      width: 0%;
+    }
   }

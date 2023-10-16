@@ -35,7 +35,7 @@ function Header({ onSearch, setPokedex, pokedex }) {
 
   const pesquisarNome = (event) => {
     const nomePesquisado = event.target.value;
-    // Chama a função de pesquisa definida em App.js
+
     onSearch(nomePesquisado);
   };
 
