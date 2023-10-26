@@ -4,6 +4,7 @@
     display: flex;
     justify-content: space-between;
     background-size: 100% 100%;
+    min-width: 400px;
     width: 56%;
     height: 90%;
     background-image: url("https://raw.githubusercontent.com/Obrunowww/Pokemon-React/main/public/images/pokedex.png");
@@ -60,6 +61,7 @@ width: 90%;
     height: 30%;
 }
 .esquerdaDaImagem{
+  min-width: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,6 +100,7 @@ width: 90%;
     width: 100%;
 }
 .PokeAtualtipos button{
+  min-width: 40px;
     width: 50%;
     border: solid 1px;
     color: black;
@@ -335,4 +338,50 @@ width: 90%;
     }100%{
       width: 0%;
     }
+  }
+
+
+  .SessãoDosFavoritos{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    height: 88%;
+    background-color: rgba(0, 0, 0, 0.856);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation:  MostrarInfoFav ease 2s ;
+    z-index: 2;
+  }
+  @keyframes MostrarInfoFav {
+    from{
+      right: -40%;
+      
+    }to{
+      
+      right: 0;
+    }
+    
+  }
+
+
+  .SessãoDosFavoritos figure{
+    width: 50%;
+    height: 50%;
+    margin-top: 10%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: 100% 100%;
+  }
+  .SessãoDosFavoritos figure img{
+    width: 50%;
+    height: 50%;
+  }
+  .SessãoDosFavoritos figure h1{
+    position: absolute;
+    bottom: 10px;
   }

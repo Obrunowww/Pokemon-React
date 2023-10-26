@@ -72,6 +72,7 @@ main{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .tabuleiroDeCards {
   display: grid; 
@@ -135,9 +136,8 @@ figcaption{
   max-width: 40px;
   display: flex;
   flex-direction: column;
-  
   top: 0;
-  left: 200px;
+  right: 0px;
 }
 
 .interaçãoPokemon button{
@@ -236,5 +236,47 @@ figcaption{
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+.favoritar{
+  width: 10% !important;
+  position: absolute !important;
+  top: 1%;
+  left: 1%;
+}
+.favoritar button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.MostrarOErro{
+  position: absolute;
+  width: 23%;
+  height: 10%;
+  top: 12%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.541);
+}
+.MostrarOErro .barraContainer{
+  width: 100%;
+  height: 25%;
+  
+}
+.MostrarOErro .barraContainer .barra{
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  animation: passarTempo infinite ease 3s;
+}
+@keyframes passarTempo{
+  from{
+    width: 100%;
+  }to{
+    width: 0%;
+    background-color: red;
   }
 }

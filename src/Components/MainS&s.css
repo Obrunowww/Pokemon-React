@@ -1,0 +1,251 @@
+
+.CarrosselDePokemons{
+    width: 100%;
+    height: 60%;
+    min-width: 360px;
+    transition: all ease 2s;
+}
+
+.CarrosselDePokemons .slide{
+    border: none;
+    min-width: 340px;
+    width: 50%;
+    
+}
+
+.CarrosselDePokemons .conteudoSlider{
+    position: relative;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    transition:  all ease 2s;
+   
+}
+
+
+.CarrosselDePokemons img{
+    width: 50%;
+    height: 100%;
+    object-fit: contain;
+}
+.CarrosselDePokemons figcaption{
+    height: 10%;
+    padding: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.CarrosselDePokemons .tiposDoFavorito{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 50px;
+    width: 10%;
+    cursor: pointer;
+    
+}
+.CarrosselDePokemons .removerFavorito{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    width: 4%;
+    height: 7%;
+    background-color: rgba(19, 0, 2, 0.63);
+    border: none;
+    cursor: pointer;
+}
+.CarrosselDePokemons .tiposDoFavorito div{
+    border: solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Éshiny{
+    position: absolute;
+    left: 0;
+    width: 5%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    animation: brilhar ease infinite 4s;
+    text-shadow: 1px 1px 1px rgb(90, 48, 1) ,1px 1px 20px black, 1px 1px 10px rgb(240, 197, 7);
+    
+    
+}
+@keyframes brilhar{
+    from{
+        opacity: 0;
+    }to{
+        opacity: 1;
+    }
+}
+.animaçãoDeBrilhar{
+    transition: all ease 3s;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 80%;
+   
+    animation: aparecer 2s;
+}
+.brilhando{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-shadow: 1px 1px 1px rgb(90, 48, 1) ,1px 1px 20px black, 1px 1px 10px rgb(240, 197, 7);
+}
+@keyframes aparecer{
+    from{
+        height: 0%;
+        width: 0%;
+        opacity: 0;
+    }to{
+        height: 80%;
+        width: 50%;
+        opacity: 1;
+    }
+}
+.brilhando:nth-child(1) {
+    animation-duration: 3s;
+    animation-name: mover-direita; /* Define a animação "mover-direita" */
+}
+
+.brilhando:nth-child(2) {
+    animation-duration: 2.5s;
+    animation-name: mover-esquerda; /* Define a animação "mover-esquerda" */
+}
+
+.brilhando:nth-child(3) {
+    animation-duration: 2.8s;
+    animation-name: mover-cima; /* Define a animação "mover-cima" */
+}
+
+.brilhando:nth-child(4) {
+    animation-duration: 1s;
+    animation-name: mover-baixo; /* Define a animação "mover-baixo" */
+}
+
+.brilhando:nth-child(5) {
+    animation-duration: 1.5s;
+    animation-name: mover-diagonal; /* Define a animação "mover-diagonal" */
+}
+.brilhando:nth-child(6) {
+    animation-duration: 1.8s;
+    animation-name: mover-diagonal-esquerda-cima; /* Define a animação "mover-diagonal" */
+}
+.brilhando:nth-child(7) {
+    animation-duration: 2.2s;
+    animation-name: mover-diagonal-direita-cima; /* Define a animação "mover-diagonal" */
+}
+.brilhando:nth-child(8) {
+    animation-duration: 3s;
+    animation-name: mover-diagonal-direita-baixo; /* Define a animação "mover-diagonal" */
+}
+
+.brilhando{
+    font-size: 30px;
+    /* Define a duração da animação para 3 segundos */
+    animation-timing-function: ease; /* Define a função de temporização da animação */
+    opacity: 0;
+}
+@keyframes mover-direita {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400%);
+        opacity: 0;
+    }
+}
+
+@keyframes mover-esquerda {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-400%);
+        
+        opacity: 0;
+    }
+}
+
+@keyframes mover-cima {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-400%);
+        opacity: 0;
+    }
+}
+
+@keyframes mover-baixo {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(400%);
+        opacity: 0;
+    }
+}
+
+@keyframes mover-diagonal {
+    from {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-400%, 400%);
+        opacity: 0;
+    }
+}
+@keyframes mover-diagonal-esquerda-cima {
+    from {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-400%, -400%);
+        opacity: 0;
+    }
+}
+@keyframes mover-diagonal-direita-cima {
+    from {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(400%, -400%);
+        opacity: 0;
+    }
+}
+@keyframes mover-diagonal-direita-baixo {
+    from {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    to {
+        transform: translate(400%, 400%);
+        opacity: 0;
+    }
+}

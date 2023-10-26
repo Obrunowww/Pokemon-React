@@ -5,21 +5,21 @@ function Header({ onSearch, setPokedex, pokedex }) {
  
 
   const mudarMain = (umaPokedex) =>{
-    console.log(`Foi clicado a ${umaPokedex}`)
+    
     if(umaPokedex ===pokedex){
-      console.log('Sem mudanças')
+      
     }else if(umaPokedex !=pokedex && umaPokedex === "Pokedex"){
       
       setPokedex("Pokedex")
-      // codigo aqui...
-    }else if(umaPokedex !=pokedex && umaPokedex === "PokedexSword&Shild"){
+      
+    }else if(umaPokedex !=pokedex && umaPokedex === "MeusPokemons"){
      
-      setPokedex("PokedexSword&Shild")
-      // codigo aqui...
+      setPokedex("MeusPokemons")
+ 
     }else if(umaPokedex !=pokedex && umaPokedex === "PokedexClassica"){
       
       setPokedex("PokedexClassica")
-      // codigo aqui...
+      
     }
 
     
@@ -48,7 +48,7 @@ function Header({ onSearch, setPokedex, pokedex }) {
         <nav>
           <ul>
             <li onClick={() =>mudarMain("Pokedex")} style={{color: `${pokedex === "Pokedex"? "red": ""}`}} >Pokedex</li>
-            <li onClick={() =>mudarMain("PokedexSword&Shild")} style={{color: `${pokedex === "PokedexSword&Shild"? "red": ""}`}}>PokedexSword&Shild</li>
+            <li onClick={() =>mudarMain("MeusPokemons")} style={{color: `${pokedex === "MeusPokemons"? "red": ""}`}}>Meus Pokémons</li>
             <li onClick={() =>mudarMain("PokedexClassica")} style={{color: `${pokedex === "PokedexClassica"? "red": ""}`}}>PokedexClassica</li>
           </ul>
         </nav>

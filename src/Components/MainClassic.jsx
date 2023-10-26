@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "./PokedexC.css"
 import axios from 'axios';
-function MainClassic({ nomePesquisado, pokemons, loading }) {
+function MainClassic({ nomePesquisado, pokemons, loading, pegarFundo, pegarCor}) {
 
     const [pesquisa, setPesquisa] = useState(false)
     const [pesquisaDaDex, setPesquisaDaDex] = useState("")
@@ -18,61 +18,13 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
     const [numeroDoPokemon, setNumeroDoPokemon] = useState(0)
     const [imagemDoPokemonAtual, setImagemDoPokemonAtual] = useState("")
     const [pokemonAtual, setPokemonAtual] = useState(pokemons[numeroDoPokemon])
-    const [habitat, setHabitat] = useState({
-        grass: "https://i.pinimg.com/564x/50/4e/97/504e97eb934fbdf6f3011584c4d8c1e3.jpg",
-        fire: "https://img.freepik.com/fotos-premium/erupcao-vulcanica-e-arte-digital-do-vulcao-ativo-da-lava_160901-5726.jpg",
-        water: "https://static.vecteezy.com/ti/vetor-gratis/p1/7875091-tropical-pixel-praia-com-surf-seascape-com-ceu-azul-e-brilho-do-poente-espuma-branca-rola-em-areia-amarela-quente-ondas-oceanicas-coloridas-criando-clima-de-de-ferias-vetor.jpg",
-        bug: "https://i.pinimg.com/originals/a5/9b/73/a59b735200362f91e6735b2abcb787b2.png",
-        normal: "https://i.pinimg.com/originals/d5/c7/b8/d5c7b890f8468454a7c9ad6244623e1f.png",
-        poison: "https://i.pinimg.com/originals/8f/82/5d/8f825d7fa5ea0cd3898caf0168e60db3.png",
-        electric: "https://www.models-resource.com/resources/big_icons/17/16701.png?updated=1467826518",
-        ground: "https://images.ecycle.com.br/wp-content/uploads/2023/01/19145711/andrzej-kryszpiniuk-D1IS5s5O9xo-unsplash-scaled.jpg.webp",
-        fairy: "https://static.vecteezy.com/ti/fotos-gratis/p2/1414787-planicie-florida-foto.jpg",
-        flying: "https://media.istockphoto.com/id/1324413691/photo/beautiful-sky-with-white-clouds.jpg?b=1&s=612x612&w=0&k=20&c=1PZj5YunYSSl_UJBQusU9nyoHrg8PbF4Ul9ZCxv3eDo=",
-        fighting: "https://media.istockphoto.com/id/1286724959/pt/foto/indoor-empty-room-japan-style-3d-rendering.jpg?s=612x612&w=0&k=20&c=q98y_KxitXeWt468jqIPKAM5b-xv_0Sy2mJeoCM6prA=",
-        rock: "https://e1.pxfuel.com/desktop-wallpaper/810/702/desktop-wallpaper-pixel-art-mountains-and-mobile-backgrounds-1920x1080-pixel-art.jpg",
-        ice: "https://media.timeout.com/images/105237092/750/422/image.jpg",
-        psychic: "https://static.mundoeducacao.uol.com.br/mundoeducacao/conteudo_legenda/4c7a0ac590c714f38e9301b88d987665.jpg",
-        dragon: "https://colorindonuvens.com/wp-content/uploads/2014/09/ArteConceitual-ComoTreinarSeuDragao-ColorindoNuvens1.png",
-        ghost: "https://e0.pxfuel.com/wallpapers/649/180/desktop-wallpaper-ghost-pokemon.jpg",
-        steel: "https://st4.depositphotos.com/4552837/39986/i/450/depositphotos_399860170-stock-photo-a-cave-in-the-rock.jpg",
-        dark: "https://cdn.steamstatic.com/steamcommunity/public/images/items/573210/666974d94dc7e370f8cb279fd986ff477f00ccb7.jpg",
-        default: "https://i.pinimg.com/originals/d5/c7/b8/d5c7b890f8468454a7c9ad6244623e1f.pn"
-    })
+    
     const [linhaEvoDosPoke, setLinhaEvoDosPoke] = useState([])
 
     const [tipoPrincipal, setTipoPrincipal] = useState(pokemonAtual.types[0].type.name)
 
-
-    const pegarFundo = (tipo) => {
-        return habitat[tipo.toLowerCase()] || habitat.default;
-    }
     const [fundoAtual, setFundoAtual] = useState(pegarFundo(tipoPrincipal))
-    const pegarCor = (tipo, escuro = false) => {
-        const cores = {
-            grass: escuro ? `#000000` : `#8bbe8a`,
-            fire: escuro ? `#230500` : `#ffa756`,
-            water: escuro ? `#230500` : `#58abf6`,
-            bug: escuro ? `#230500` : `#8bd674`,
-            normal: escuro ? `#230500` : `#BEC2CF`,
-            poison: escuro ? `#000000` : `#9f6e97`,
-            electric: escuro ? `#000000` : `#FFD65A`,
-            ground: escuro ? `#281506` : `#f78551`,
-            fairy: escuro ? `#130D0D` : `#eba8c3`,
-            flying: escuro ? `#0B1626` : `#748fc9`,
-            fighting: escuro ? `#120306` : `#eb4971`,
-            rock: escuro ? `#000000` : `#6f6e78`,
-            ice: escuro ? `#0C2528` : `#91d8df`,
-            psychic: escuro ? `#481515` : `#ff6568`,
-            dragon: escuro ? `#0E1321` : `#7383b9`,
-            ghost: escuro ? `#2A2442` : `#8571be`,
-            steel: escuro ? `#112330` : `#4c91b2`,
-            dark: escuro ? `#D9D9CE` : `#1A1A1A`,
-            default: escuro ? `#000000` : `#ffffff`, // Cor padrão se o tipo não for encontrado
-        };
 
-        return cores[tipo.toLowerCase()] || cores.default;
-    };
 
     useEffect(() => {
 
@@ -118,7 +70,8 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
 
     const MostrarPokemon = () => {
-
+        const teste = nomePesquisado
+        console.log(teste)
     }
     const reset = () => {
         setPokemonEstaVirado(false)
@@ -294,8 +247,11 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
             setPesquisa(false);
             setPesquisaDaDex("");
         }
-    };
+    }
 
+    useEffect(() => {
+        pesquisarPokemon(nomePesquisado)
+      }, [nomePesquisado]);
 
     return (
         <main className="mainPokedexC">
@@ -512,7 +468,7 @@ function MainClassic({ nomePesquisado, pokemons, loading }) {
 
             </section>
             {mostrarErroNaPesquisa && (
-                <div className="mostrarErro">Pokemon não existente 😿
+                <div className="mostrarErro">Pokémon não existente 😿
                     <div className="progreçoContainer">
                         <div className="progreço"></div>
                     </div>
