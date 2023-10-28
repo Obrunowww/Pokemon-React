@@ -156,7 +156,7 @@ function App() {
         </div>
       </div>)}
 
-      {adicionarFavorito && (<AdicionarPoke
+      {adicionarFavorito && favoritos.length <=6 && (<AdicionarPoke
         adicionarFavorito={adicionarFavorito}
         setAdicionarFavorito={setAdicionarFavorito}
         favoritos={favoritos} 

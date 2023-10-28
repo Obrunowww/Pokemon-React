@@ -27,33 +27,25 @@ function Card({ nome, imagem, shiny, virado, shinyVirado, tipos, pegarCor, pegar
     }
 
     const VerificarFavoritos = () => {
-
-        
-
         const listaNova = [...favoritos];
-        const PokemonFavoritado = { nome: nome,
-            imagem: pokemonEhShiny? shiny : imagem,
-            tipos: tipos,
-            shiny: pokemonEhShiny? true: false
-         };
-
+        const PokemonFavoritado = {
+          nome: nome,
+          imagem: pokemonEhShiny ? shiny : imagem,
+          tipos: tipos,
+          shiny: pokemonEhShiny ? true : false
+        };
+      
         const FavoritadoAtual = listaNova.findIndex((favorito) => favorito.nome === PokemonFavoritado.nome);
-
+      
         if (FavoritadoAtual !== -1) {
-           
-            listaNova.splice(FavoritadoAtual, 1);
-            setFavoritos(listaNova);
+          listaNova.splice(FavoritadoAtual, 1);
+          setFavoritos(listaNova);
         } else if (listaNova.length < 6) {
-            listaNova.push(PokemonFavoritado); 
-            setFavoritos(listaNova);
-        }else if( listaNova.length){
-            setErro(true)
-            setTimeout(() => {
-                setErro(false)
-            }, 3000);
-
-        }
-    }
+          listaNova.push(PokemonFavoritado);
+          setFavoritos(listaNova);
+        } 
+      }
+      
 
     return (
         <section className="cardPoke"
@@ -98,11 +90,20 @@ function Card({ nome, imagem, shiny, virado, shinyVirado, tipos, pegarCor, pegar
                 <button onClick={() => {
                     if(favoritos.some((fav) => fav.nome === nome)){
                         setAdicionarFavorito(false) 
+                        VerificarFavoritos()
                     }else{
-                        setAdicionarFavorito(true)
+                        if(favoritos.length <=5){
+                            setAdicionarFavorito(true);
+                            VerificarFavoritos()
+                            setFavoritoAtual(nome)
+                        }else {
+                            setErro(true);
+                            setTimeout(() => {
+                              setErro(false);
+                            }, 3000);
+                          }
                     }
-                    VerificarFavoritos()
-                    setFavoritoAtual(nome)
+
                     
 
                 }}>
