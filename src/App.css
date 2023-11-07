@@ -1,41 +1,49 @@
-header{
+header {
   height: 12vh;
   border-bottom: solid 1px rgba(255, 255, 255, 0.212);
 }
-header,header section{
+
+header,
+header section {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
 }
-header img{
+
+header img {
   height: 10vh;
 }
-header section{
+
+header section {
   align-items: center;
   width: 90%;
   justify-content: space-between;
   transition: all ease 3s;
 }
+
 /* NAV DA HEADER */
-header nav{
+header nav {
   width: 40vw;
 }
-header ul{
+
+header ul {
   display: flex;
   justify-content: space-between;
-  
+
 }
-header li{
+
+header li {
   cursor: pointer;
   transition: all ease 1s;
 }
 
-header li:hover{
+header li:hover {
   color: red;
 
 }
-.caixaDeInput{
+
+.caixaDeInput {
   width: 160px;
   display: flex;
   align-items: center;
@@ -46,26 +54,30 @@ header li:hover{
 /* Adicionando uma animação para o input */
 header section input {
   padding: 2px;
-  transition: width ease 3s; 
-  width: 100px; 
+  transition: width ease 3s;
+  width: 100px;
 }
-header section input:focus{
+
+header section input:focus {
   transition: all ease 2s;
   box-shadow: 0 0 5px rgba(250, 1, 1, 0.726);
   width: 130px;
 }
+
 /* Mudando a info do Placeholder do Input */
 header section input::placeholder {
-  color: #999; 
+  color: #999;
   content: "Pesquisar";
 }
+
 header section input:focus::placeholder {
-  color: #f0f0f0; 
-  content: "Pesquisar Pokémon"; 
+  color: #f0f0f0;
+  content: "Pesquisar Pokémon";
 }
+
 /* COMEÇANDO A ESTILIZAR A MAIN */
 
-main{
+main {
   height: 88vh;
   transition: all ease 2s;
   display: flex;
@@ -74,24 +86,27 @@ main{
   justify-content: center;
   overflow: hidden;
 }
+
 .tabuleiroDeCards {
-  display: grid; 
+  display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px; 
+  gap: 10px;
   align-items: center;
   justify-content: center;
   width: 95%;
   height: 90%;
   overflow-x: hidden;
 }
-.tabuleiroDeCards div{
+
+.tabuleiroDeCards div {
   position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   grid-column: 3;
 }
-.cardPoke{
+
+.cardPoke {
   position: relative;
   display: flex;
   align-items: center;
@@ -104,24 +119,27 @@ main{
   background-size: 100% 100%;
 }
 
-.cardPoke img{
+.cardPoke img {
   width: 200px;
   height: 150px;
   object-fit: contain;
-  
+
 }
-figcaption{
+
+figcaption {
   text-transform: capitalize;
   text-align: center;
-  border: solid 1px ;
+  border: solid 1px;
 }
-.tipos{
+
+.tipos {
   cursor: pointer;
   width: 100%;
   display: flex;
   justify-content: space-around;
 }
-.tipos span{
+
+.tipos span {
   color: black;
   border: solid 1px;
   text-align: center;
@@ -130,8 +148,9 @@ figcaption{
 
   padding: 2px;
 }
+
 /* Botões de Interação */
-.interaçãoPokemon{
+.interaçãoPokemon {
   position: absolute !important;
   max-width: 40px;
   display: flex;
@@ -140,19 +159,20 @@ figcaption{
   right: 0px;
 }
 
-.interaçãoPokemon button{
+.interaçãoPokemon button {
 
   background: transparent;
   border: none;
   cursor: pointer;
   transition: ease all 1s;
 }
-.interaçãoPokemon button:hover{
+
+.interaçãoPokemon button:hover {
   scale: 1.05;
-  
+
 }
 
-.botõesDoPoke{
+.botõesDoPoke {
   display: flex;
   justify-content: space-around !important;
   flex-direction: column;
@@ -160,7 +180,7 @@ figcaption{
 }
 
 /* botão de carregar mais */
-.carregarMais{
+.carregarMais {
   cursor: pointer;
   background-color: transparent;
   border: solid 1px black;
@@ -171,112 +191,241 @@ figcaption{
   align-items: center;
   transition: all ease 1s;
 }
-.carregarMais:hover{
-  scale:  1.05;
+
+.carregarMais:hover {
+  scale: 1.05;
   color: black;
   background-color: rgba(255, 255, 255, 0.356);
 }
+
 /* loading teste */
 .lds-facebook {
   display: inline-block;
   position: relative;
-  width: 10px; /* Ajuste o tamanho desejado */
-  height: 10px; /* Ajuste o tamanho desejado */
+  width: 10px;
+  /* Ajuste o tamanho desejado */
+  height: 10px;
+  /* Ajuste o tamanho desejado */
   display: flex;
-  justify-content: center; /* Centralize horizontalmente */
-  align-items: center; /* Centralize verticalmente */
+  justify-content: center;
+  /* Centralize horizontalmente */
+  align-items: center;
+  /* Centralize verticalmente */
 }
 
 .lds-facebook div {
   display: inline-block;
-  width: 4px; /* Ajuste o tamanho desejado */
-  height: 14px; /* Ajuste o tamanho desejado */
+  width: 4px;
+  /* Ajuste o tamanho desejado */
+  height: 14px;
+  /* Ajuste o tamanho desejado */
   background: #fff;
   margin: 0 2px;
   animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
+
 .lds-facebook div:nth-child(1) {
-  left: 2px; /* Ajuste o tamanho desejado */
+  left: 2px;
+  /* Ajuste o tamanho desejado */
   animation-delay: -0.24s;
 }
+
 .lds-facebook div:nth-child(2) {
-  left: 8px; /* Ajuste o tamanho desejado */
+  left: 8px;
+  /* Ajuste o tamanho desejado */
   animation-delay: -0.12s;
 }
+
 .lds-facebook div:nth-child(3) {
-  left: 14px; /* Ajuste o tamanho desejado */
+  left: 14px;
+  /* Ajuste o tamanho desejado */
   animation-delay: 0;
 }
+
 @keyframes lds-facebook {
   0% {
-    top: 2px; /* Ajuste o tamanho desejado */
-    height: 6px; /* Ajuste o tamanho desejado */
+    top: 2px;
+    /* Ajuste o tamanho desejado */
+    height: 6px;
+    /* Ajuste o tamanho desejado */
   }
-  50%, 100% {
-    top: 4px; /* Ajuste o tamanho desejado */
-    height: 2px; /* Ajuste o tamanho desejado */
+
+  50%,
+  100% {
+    top: 4px;
+    /* Ajuste o tamanho desejado */
+    height: 2px;
+    /* Ajuste o tamanho desejado */
   }
 }
+
 /* p caso nn tenha um pokemon  */
 
-.third-column p{
+.third-column p {
   position: absolute;
-  min-width:500px;
+  min-width: 500px;
   top: 90px;
 
   font-size: 30px;
 }
-.pokebolaLoading{
+
+.pokebolaLoading {
   transition: all ease 2s;
   animation: rotate 2s linear infinite;
 }
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
-.favoritar{
+
+.favoritar {
   width: 10% !important;
   position: absolute !important;
   top: 1%;
   left: 1%;
 }
-.favoritar button{
+
+.favoritar button {
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
-.MostrarOErro{
+
+.MostrarOErro {
   position: absolute;
   width: 23%;
   height: 10%;
   top: 12%;
-  left:50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.541);
 }
-.MostrarOErro .barraContainer{
+
+.MostrarOErro .barraContainer {
   width: 100%;
   height: 25%;
-  
+
 }
-.MostrarOErro .barraContainer .barra{
+
+.MostrarOErro .barraContainer .barra {
   width: 100%;
   height: 100%;
   background-color: #fff;
   animation: passarTempo infinite ease 3s;
 }
-@keyframes passarTempo{
-  from{
+
+@keyframes passarTempo {
+  from {
     width: 100%;
-  }to{
+  }
+
+  to {
     width: 0%;
     background-color: red;
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 999px){
+  header,
+  header section {
+    flex-direction: column;
+    height: 22vh;
+    min-height: 164px;
+  }
+
+  header nav,
+  .caixaDeInput {
+    width: 100%;
+  }
+  header ul{
+    justify-content: space-around;
+  }
+  li{
+    font-size: 25px;
+  }
+  .tabuleiroDeCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    flex: none;
+    align-items: center;
+    width: 88%;
+    padding-bottom: 10%;
+
+  }
+  .cardPoke{
+    padding: 10%;
+    width: 48%;
+  }
+  .tipos{
+
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 767px) {
+
+  header,
+  header section {
+    flex-direction: column;
+    height: 22vh;
+    min-height: 164px;
+  }
+
+  header nav,
+  .caixaDeInput {
+    width: 100%;
+  }
+  header ul{
+    justify-content: space-around;
+  }
+  header section nav li:nth-child(3){
+    display: none;
+
+  }
+
+  header section input {
+    width: 30%;
+  }
+
+  .tabuleiroDeCards {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex: none;
+    width: 90%;
+    padding-bottom: 10%;
+
+ 
+
+  }
+  .cardPoke{
+    padding: 10%;
+    width: 80%;
+  }
+  .tipos{
+    width: 90%;
+  }
+  
+
+  .carregarMais {
+    display: flex;
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 20%;
+    background-color: rgba(0, 0, 0, 0.582);
   }
 }

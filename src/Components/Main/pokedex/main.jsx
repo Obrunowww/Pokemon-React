@@ -3,7 +3,9 @@ import Card from './mainCard';
 
 
 
-function Main({ nomePesquisado, pokemons, loading, favoritos, setFavoritos, pegarFundo,pegarCor, setErro, adicionarFavorito, setAdicionarFavorito, favoritoAtual, setFavoritoAtual}) {
+function Main({ nomePesquisado, pokemons, loading, favoritos, setFavoritos,
+     pegarFundo,pegarCor, setErro, adicionarFavorito, setAdicionarFavorito,
+      favoritoAtual, setFavoritoAtual}) {
     const [quantidadeDesejada, setQuantidadeDesejada] = useState(50);
     const [pokemonsFiltrados, setPokemonsFiltrados] = useState([]);
 
@@ -20,7 +22,8 @@ function Main({ nomePesquisado, pokemons, loading, favoritos, setFavoritos, pega
     useEffect(() => {
         const filteredPokemons = nomePesquisado
             ? pokemons.filter((pokemon) =>
-                pokemon.name.toLowerCase().includes(nomePesquisado.toLowerCase()) || pokemon.order === parseInt(nomePesquisado)
+                pokemon.name.toLowerCase().includes(nomePesquisado.toLowerCase()) 
+                || pokemon.order === parseInt(nomePesquisado)
             )
             : pokemons;
 
